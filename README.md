@@ -94,6 +94,7 @@ jobs:
 | `assignee_trigger`    | The assignee username that triggers the action (e.g. @claude). Only used for issue assignment                        | No       | -         |
 | `trigger_phrase`      | The trigger phrase to look for in comments, issue/PR bodies, and issue titles                                        | No       | `@claude` |
 | `claude_env`          | Custom environment variables to pass to Claude Code execution (YAML format)                                          | No       | ""        |
+| `base_url`            | Custom base URL for Claude API (useful for LLM gateway services and unified endpoint)                                 | No       | ""        |
 
 \*Required when using direct Anthropic API (default and when not using Bedrock or Vertex)
 
@@ -408,11 +409,12 @@ Use a specific Claude model:
 
 ## Cloud Providers
 
-You can authenticate with Claude using any of these three methods:
+You can authenticate with Claude using any of these methods:
 
 1. Direct Anthropic API (default)
 2. Amazon Bedrock with OIDC authentication
 3. Google Vertex AI with OIDC authentication
+4. LLM Gateway Services (unified endpoint)
 
 For detailed setup instructions for AWS Bedrock and Google Vertex AI, see the [official documentation](https://docs.anthropic.com/en/docs/claude-code/github-actions#using-with-aws-bedrock-%26-google-vertex-ai).
 
@@ -445,6 +447,13 @@ Use provider-specific model names based on your chosen provider:
   with:
     model: "claude-3-7-sonnet@20250219"
     use_vertex: "true"
+    # ... other inputs
+
+# For LLM Gateway Services (unified endpoint)
+- uses: anthropics/claude-code-action@beta
+  with:
+    anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }} # Or gateway service token
+    base_url: "https://your-gateway-server.com/v1" # Your gateway service endpoint
     # ... other inputs
 ```
 

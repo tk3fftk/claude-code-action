@@ -61,6 +61,10 @@ inputs:
     description: "Use Google Vertex AI with OIDC authentication instead of direct Anthropic API"
     required: false
     default: "false"
+  base_url:
+    description: "Custom base URL for Claude API (useful for LLM gateway services and unified endpoint)"
+    required: false
+    default: ""
 
   max_turns:
     description: "Maximum number of conversation turns"
@@ -122,6 +126,7 @@ runs:
         use_bedrock: ${{ inputs.use_bedrock }}
         use_vertex: ${{ inputs.use_vertex }}
         anthropic_api_key: ${{ inputs.anthropic_api_key }}
+        base_url: ${{ inputs.base_url }}
         claude_env: ${{ inputs.claude_env }}
       env:
         # Model configuration
@@ -129,7 +134,7 @@ runs:
         GITHUB_TOKEN: ${{ steps.prepare.outputs.GITHUB_TOKEN }}
 
         # Provider configuration
-        ANTHROPIC_BASE_URL: ${{ env.ANTHROPIC_BASE_URL }}
+        ANTHROPIC_BASE_URL: ${{ inputs.base_url || env.ANTHROPIC_BASE_URL }}
 
         # AWS configuration
         AWS_REGION: ${{ env.AWS_REGION }}
