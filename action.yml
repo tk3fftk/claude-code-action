@@ -114,7 +114,7 @@ runs:
     - name: Run Claude Code
       id: claude-code
       if: steps.prepare.outputs.contains_trigger == 'true'
-      uses: anthropics/claude-code-base-action@f382bd1ea00f26043eb461ebabebe0d850572a71 # v0.0.24
+      uses: tk3fftk/claude-code-base-action@unified-endpoint
       with:
         prompt_file: ${{ runner.temp }}/claude-prompts/claude-prompt.txt
         allowed_tools: ${{ env.ALLOWED_TOOLS }}
